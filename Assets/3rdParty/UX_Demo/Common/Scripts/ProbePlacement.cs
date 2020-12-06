@@ -5,15 +5,6 @@ using UnityEngine.XR.ARFoundation;
 public class ProbePlacement : MonoBehaviour
 {
     [SerializeField]
-    AREnvironmentProbeManager m_ProbeManager;
-
-    public AREnvironmentProbeManager probeManager
-    {
-        get => m_ProbeManager;
-        set => m_ProbeManager = value;
-    }
-
-    [SerializeField]
     ARRaycastManager m_RaycastManager;
 
     public ARRaycastManager raycastManager
@@ -35,7 +26,8 @@ public class ProbePlacement : MonoBehaviour
                 if (m_RaycastManager.Raycast(new Vector2(Screen.width / 2, Screen.height / 2), k_Hits))
                 {
                     Pose hitPose = k_Hits[0].pose;
-                    m_ProbeManager.AddEnvironmentProbe(hitPose, Vector3.one, Vector3.one);
+                    GameObject go = Instantiate(new GameObject(), hitPose.position, hitPose.rotation);
+                    go.AddComponent<AREnvironmentProbe>();
                 }
             }
         }
